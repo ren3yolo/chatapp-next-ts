@@ -14,14 +14,14 @@ export default function SignIn() {
             id='email'
             placeholder='yourname@example.com'
             autoComplete='false'
-            className='w-full h-8 mt-2 ring-1 pl-2 rounded ring-pink-300 outline-none hover:ring-pink-400 focus:ring-2 focus:ring-pink-500'
+            className='w-full h-8 mt-2 sm:ring-1 pl-2 rounded sm:ring-pink-300 focus:outline-none hover:ring-pink-400 focus:ring-2 focus:ring-pink-500'
           />
           <label className='block mt-4'>Password</label>
           <input
             type='password'
             id='password'
             placeholder='***********'
-            className='w-full h-8 mt-2 ring-1 pl-2 rounded ring-pink-300 outline-none hover:ring-pink-400 focus:ring-2 focus:ring-pink-500'
+            className='w-full h-8 mt-2 sm:ring-1 pl-2 rounded ring-pink-300 focus:outline-none hover:ring-pink-400 focus:ring-2 focus:ring-pink-500'
           />
           <Button variant='primary' className='mt-6' fullWidth>
             Sign in
@@ -36,7 +36,7 @@ export default function SignIn() {
           </Button>
         </form>
 
-        <p className='mt-10'>
+        <p className='my-10'>
           Don&apos;t have an account?
           <Link href='/signup' className='link'>
             {" "}
