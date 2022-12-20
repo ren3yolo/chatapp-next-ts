@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+input {
+  @apply h-10 mt-2 ring-1 pl-2 rounded ring-pink-300 focus:outline-none hover:ring-pink-400 focus:ring-2 focus:ring-pink-500;
+}
+
 .link {
   @apply text-blue-500 hover:text-blue-700;
 }

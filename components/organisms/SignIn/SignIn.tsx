@@ -1,29 +1,60 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import Link from "next/link";
+import { useSession, signIn } from "next-auth/react";
+
+//custom imports
 import Button from "../../atoms/Button/Button";
+import Input from "../../atoms/Input/Input";
 
 export default function SignIn() {
+  const { data: session } = useSession();
+  console.log(session);
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+  }
+
+  async function handleCredsSignIn() {
+    await signIn("credentials", {
+      redirect: false,
+      email: "yourname@example.com",
+      password: "123",
+    });
+  }
+
   return (
     <div className='grid grid-cols-1 mt-20 md:border-l-2'>
       <h1 className='text-4xl text-center'>Sign In</h1>
       <div className='flex flex-col items-center'>
-        <form autoComplete='off' className='w-1/2 mt-10'>
-          <label className='block'>Email</label>
-          <input
-            type='text'
+        <form
+          onSubmit={handleSubmit}
+          autoComplete='off'
+          className='w-1/2 mt-10'
+        >
+          <label className='block' htmlFor='email'>
+            Email
+          </label>
+          <Input
+            type='email'
             id='email'
+            fullWidth
             placeholder='yourname@example.com'
-            autoComplete='false'
-            className='w-full h-8 mt-2 ring-1 pl-2 rounded ring-pink-300 focus:outline-none hover:ring-pink-400 focus:ring-2 focus:ring-pink-500'
           />
-          <label className='block mt-4'>Password</label>
-          <input
+          <label className='block mt-4' htmlFor='password'>
+            Password
+          </label>
+          <Input
             type='password'
             id='password'
-            placeholder='***********'
-            className='w-full h-8 mt-2 ring-1 pl-2 rounded ring-pink-300 focus:outline-none hover:ring-pink-400 focus:ring-2 focus:ring-pink-500'
+            fullWidth
+            placeholder='********'
           />
-          <Button variant='primary' className='mt-6' fullWidth>
+          <Button
+            variant='primary'
+            className='mt-6'
+            fullWidth
+            onClick={handleCredsSignIn}
+          >
             Sign in
           </Button>
           <div className='flex flex-row w-full flex-grow-1'>
