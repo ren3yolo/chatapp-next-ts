@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 import cx from "classnames";
 
 type InputProps = {
@@ -7,6 +7,9 @@ type InputProps = {
   placeholder?: string;
   className?: string;
   fullWidth?: boolean;
+  value: string;
+  onChange: ChangeEventHandler;
+  required?: boolean;
 };
 
 export default function Input({
@@ -15,6 +18,9 @@ export default function Input({
   placeholder,
   className,
   fullWidth = false,
+  value,
+  onChange = () => {},
+  required = false,
 }: InputProps) {
   return (
     <input
@@ -22,6 +28,9 @@ export default function Input({
       id={id}
       placeholder={placeholder}
       className={cx(className, `${fullWidth ? "w-full" : ""}`)}
+      value={value}
+      onChange={onChange}
+      required={required}
     />
   );
 }

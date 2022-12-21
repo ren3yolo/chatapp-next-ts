@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import Link from "next/link";
 import { useSession, signIn } from "next-auth/react";
 
@@ -10,11 +10,11 @@ export default function SignIn() {
   const { data: session } = useSession();
   console.log(session);
 
-  function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-  }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  async function handleCredsSignIn() {
+  async function handleCredsSignIn(e: FormEvent) {
+    e.preventDefault();
     await signIn("credentials", {
       redirect: false,
       email: "yourname@example.com",
@@ -27,7 +27,7 @@ export default function SignIn() {
       <h1 className='text-4xl text-center'>Sign In</h1>
       <div className='flex flex-col items-center'>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleCredsSignIn}
           autoComplete='off'
           className='w-1/2 mt-10'
         >
@@ -39,6 +39,11 @@ export default function SignIn() {
             id='email'
             fullWidth
             placeholder='yourname@example.com'
+            value={email}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
+            required
           />
           <label className='block mt-4' htmlFor='password'>
             Password
@@ -48,13 +53,13 @@ export default function SignIn() {
             id='password'
             fullWidth
             placeholder='********'
+            value={password}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+            required
           />
-          <Button
-            variant='primary'
-            className='mt-6'
-            fullWidth
-            onClick={handleCredsSignIn}
-          >
+          <Button variant='primary' className='mt-6' fullWidth>
             Sign in
           </Button>
           <div className='flex flex-row w-full flex-grow-1'>
