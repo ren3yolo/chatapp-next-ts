@@ -14,6 +14,8 @@ export interface UserType {
 type UserAuthType = {
   email: string;
   password: string;
+  name: string;
+  sso_provider?: string;
 };
 
 const insertUser = async ({
@@ -21,7 +23,7 @@ const insertUser = async ({
   email,
   password,
   sso_provider = "",
-}: UserType) => {
+}: UserAuthType) => {
   try {
     const database: string = process.env.DB!;
     await client.connect();
@@ -41,7 +43,13 @@ const insertUser = async ({
   }
 };
 
-async function authorizeUser({ email, password }: UserAuthType) {
+async function authorizeUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
   try {
     await client.connect();
     const database: string = process.env.DB!;
