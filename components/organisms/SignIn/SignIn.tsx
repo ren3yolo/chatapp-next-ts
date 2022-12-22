@@ -24,8 +24,6 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  console.log(state.error);
-
   useEffect(() => {
     if (session?.user) {
       router.push("/inbox");

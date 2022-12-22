@@ -64,9 +64,10 @@ async function authorizeUser({
       );
       if (isValidPassword) {
         user.id = user._id;
+        return user;
       }
-      return user;
     }
+    return undefined;
   } catch (error) {
     console.log(`Something went wrong ${error}`);
   } finally {
