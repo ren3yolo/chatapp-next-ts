@@ -10,6 +10,11 @@ export type UserType = {
   sso_provider?: string;
 };
 
+type UserAuthType = {
+  email: string;
+  password: string;
+};
+
 const insertUser = async ({
   name,
   email,
@@ -35,4 +40,25 @@ const insertUser = async ({
   }
 };
 
-export { insertUser };
+const authorizeUser = async ({ email, password }: UserAuthType) => {
+  try {
+    await client.connect();
+    const database: string = process.env.DB!;
+    const collection: Collection = client.db(database).collection("users");
+    const user = await collection.findOne({ email: email });
+    if (user) {
+      const isValidPassword: boolean = bcrypt.compareSync(
+        password,
+        user.password
+      );
+      if (isValidPassword) return user;
+    }
+    return null;
+  } catch (error) {
+    console.log(`Something went wrong ${error}`);
+  } finally {
+    client.close();
+  }
+};
+
+export { insertUser, authorizeUser };

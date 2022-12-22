@@ -1,25 +1,21 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { authorizeUser } from "../../../database/user";
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       credentials: {},
-      async authorize() {
-        const user = {
-          id: "1",
-          email: "yourname@example.com",
-          password: "123",
-        };
+      async authorize(credentials) {
+        const { email, password } = credentials;
+        const user = await authorizeUser({ email, password });
         return user;
       },
     }),
   ],
   session: {
     strategy: "jwt",
-  },
-  jwt: {
-    maxAge: 60 * 60,
+    maxAge: 15 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
