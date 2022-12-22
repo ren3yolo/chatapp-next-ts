@@ -1,15 +1,19 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { authorizeUser } from "../../../database/user";
+import { authorizeUser, UserType } from "../../../database/user";
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       credentials: {},
-      async authorize(credentials) {
-        const { email, password } = credentials;
-        const user = await authorizeUser({ email, password });
-        return user;
+      async authorize(credentials, req) {
+        const { email, password } = req.body;
+        const user: UserType | undefined = await authorizeUser({
+          email,
+          password,
+        });
+        if (user) return user;
+        else return null;
       },
     }),
   ],

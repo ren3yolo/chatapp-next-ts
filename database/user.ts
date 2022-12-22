@@ -2,13 +2,14 @@ import { Collection } from "mongodb";
 import { client } from "./connection";
 import bcrypt from "bcryptjs";
 
-export type UserType = {
-  _id?: string;
+export interface UserType {
+  _id: string;
+  id: string;
   name: string;
   email: string;
   password: string;
   sso_provider?: string;
-};
+}
 
 type UserAuthType = {
   email: string;
@@ -40,25 +41,29 @@ const insertUser = async ({
   }
 };
 
-const authorizeUser = async ({ email, password }: UserAuthType) => {
+async function authorizeUser({ email, password }: UserAuthType) {
   try {
     await client.connect();
     const database: string = process.env.DB!;
     const collection: Collection = client.db(database).collection("users");
-    const user = await collection.findOne({ email: email });
+    const user = (await collection.findOne({
+      email: email,
+    })) as unknown as UserType;
     if (user) {
       const isValidPassword: boolean = bcrypt.compareSync(
         password,
         user.password
       );
-      if (isValidPassword) return user;
+      if (isValidPassword) {
+        user.id = user._id;
+      }
+      return user;
     }
-    return null;
   } catch (error) {
     console.log(`Something went wrong ${error}`);
   } finally {
     client.close();
   }
-};
+}
 
 export { insertUser, authorizeUser };
