@@ -40,7 +40,10 @@ export default function SignIn() {
     });
     if (response?.error) {
       setLoading(false);
-      dispatch({ type: "SET_ERROR", payload: "Invalid username or password" });
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Invalid username or password ! Two spanks for ya..",
+      });
     }
   }
 
