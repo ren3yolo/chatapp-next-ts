@@ -6,8 +6,9 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       credentials: {},
-      async authorize(credentials, req) {
-        const { email, password } = req.body;
+      async authorize(credentials) {
+        // @ts-ignore
+        const { email, password } = credentials;
         const user: UserType | undefined = await authorizeUser({
           email,
           password,
