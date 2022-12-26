@@ -18,6 +18,11 @@ type UserAuthType = {
   sso_provider?: string;
 };
 
+export interface GetUserByEmailResponse {
+  email: string;
+  name: string;
+}
+
 const insertUser = async ({
   name,
   email,
@@ -75,4 +80,27 @@ async function authorizeUser({
   }
 }
 
-export { insertUser, authorizeUser };
+async function getUserWithEmail(email: string) {
+  try {
+    await client.connect();
+    const database: string = process.env.DB!;
+    const collection: Collection = client.db(database).collection("users");
+    const user: UserType = (await collection.findOne({
+      email: email,
+    })) as unknown as UserType;
+    if (user) {
+      const response: GetUserByEmailResponse = {
+        email: user.email,
+        name: user.name,
+      };
+      return response;
+    }
+    return undefined;
+  } catch (error) {
+    console.log(`Something went wrong ${error}`);
+  } finally {
+    client.close();
+  }
+}
+
+export { insertUser, authorizeUser, getUserWithEmail };

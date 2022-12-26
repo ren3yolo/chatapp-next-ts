@@ -1,16 +1,17 @@
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import Navbar from "../../components/organisms/Navbar";
+import InboxList from "../../components/templates/InboxList";
 
 function Inbox() {
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!session?.user?.name) router.push("/");
-  }, [session, router]);
-
-  return <p>Hi {session?.user?.name} ! </p>;
+  return (
+    <div className='w-screen h-screen grid-rows-6 mt-12'>
+      <Navbar />
+      <div className='grid grid-cols-12'>
+        <div className='col-span-3 h-screen'>
+          <InboxList />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Inbox;
