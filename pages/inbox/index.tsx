@@ -1,14 +1,13 @@
-import Navbar from "../../components/organisms/Navbar";
 import InboxList from "../../components/templates/InboxList";
 
 function Inbox() {
   return (
-    <div className='w-screen h-screen grid-rows-6 mt-12'>
-      <Navbar />
-      <div className='grid grid-cols-12'>
-        <div className='col-span-3 h-screen'>
+    <div className='w-screen'>
+      <div className='flex'>
+        <div className='w-1/4 shadow-2xl h-screen overflow-auto'>
           <InboxList />
         </div>
+        <div className='h-screen'>Conversation with Someone</div>
       </div>
     </div>
   );
