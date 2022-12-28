@@ -21,6 +21,7 @@ type UserAuthType = {
 export interface GetUserByEmailResponse {
   email: string;
   name: string;
+  _id: string;
 }
 
 const insertUser = async ({
@@ -92,6 +93,7 @@ async function getUserWithEmail(email: string) {
       const response: GetUserByEmailResponse = {
         email: user.email,
         name: user.name,
+        _id: user._id,
       };
       return response;
     }

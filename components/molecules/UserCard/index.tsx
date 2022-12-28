@@ -1,11 +1,13 @@
+import { MouseEventHandler } from "react";
 import Button from "../../atoms/Button/Button";
 
 type UserCardProps = {
   email: string;
   name: string;
+  handleMessageInitiate: MouseEventHandler;
 };
 
-function UserCard({ name }: UserCardProps) {
+function UserCard({ name, handleMessageInitiate }: UserCardProps) {
   return (
     <div className='w-screen flex justify-center'>
       <div
@@ -23,7 +25,7 @@ function UserCard({ name }: UserCardProps) {
           </div>
         </div>
         <div className='relative bottom-2'>
-          <Button variant='secondary' fullWidth>
+          <Button variant='secondary' onClick={handleMessageInitiate} fullWidth>
             Message
           </Button>
         </div>

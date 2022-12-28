@@ -6,7 +6,11 @@ type ConversationType = {
   time: Date;
 };
 
-function InboxList() {
+type InboxListProps = {
+  selectSender: Function;
+};
+
+function InboxList({ selectSender }: InboxListProps) {
   const [conversations] = useState<Array<ConversationType>>([
     { user: "Raj", time: new Date(Date.now()) },
     { user: "Raj", time: new Date(Date.now()) },
@@ -30,7 +34,8 @@ function InboxList() {
           <ConversationCard
             name={convCard.user}
             time={convCard.time}
-            lastMessage='Hello there ! Is this our first message?'
+            selectSender={selectSender}
+            // lastMessage='Hello there ! Is this our first message?'
             key={index}
           />
         ))}
