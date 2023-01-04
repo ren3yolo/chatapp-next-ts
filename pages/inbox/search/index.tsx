@@ -18,7 +18,6 @@ function Inbox() {
   const [user, setUser] = useState<UserType | null>(null);
   const { data } = useSession();
   const router = useRouter();
-  console.log(data);
 
   async function createRoom() {
     // @ts-ignore
@@ -30,7 +29,13 @@ function Inbox() {
         loggedUserId > searchedUserId
           ? `${searchedUserId}_${loggedUserId}`
           : `${loggedUserId}_${searchedUserId}`;
-      const response = await axios.post(`/api/rooms`, { name: roomName });
+      const response = await axios.post(`/api/rooms`, {
+        name: roomName,
+        users: [
+          { email: data.user?.email, name: data.user?.name },
+          { email: user.email, name: user.name },
+        ],
+      });
       if (response.status === 200) {
         router.push("/inbox");
       }

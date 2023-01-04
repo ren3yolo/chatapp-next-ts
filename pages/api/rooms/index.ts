@@ -7,8 +7,12 @@ export default async function handler(
 ) {
   try {
     if (req.method === "POST") {
-      const { name }: { name: string } = req.body;
-      const response = await createRoom({ name: name });
+      const {
+        name,
+        users,
+      }: { name: string; users: Array<{ email: string; name: string }> } =
+        req.body;
+      const response = await createRoom({ name: name, users: users });
       if (response) {
         return res.status(200).send({ message: "ok" });
       }
