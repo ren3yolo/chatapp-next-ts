@@ -2,7 +2,6 @@ import Avatar from "../../atoms/Avatar";
 
 type ConversationCardProps = {
   name: string;
-  time: Date;
   lastMessage?: string;
   selectSender: Function;
 };
